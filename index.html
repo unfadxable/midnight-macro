@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIDNIGHT MACRO</title>
+<style>
+:root{color-scheme:dark;--bg:#070809;--panel:#151719;--panel2:#0d0f11;--line:#45494e;--silver:#d5d8dc;--muted:#969ca4;--white:#f4f5f6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:28px 16px 44px;background:radial-gradient(ellipse at 50% 28%,#24272b 0,transparent 48%),linear-gradient(145deg,#090a0b,#020303 70%);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;background:radial-gradient(ellipse at -10% 10%,transparent 55%,#6e747b 56%,transparent 57%),radial-gradient(ellipse at 110% 90%,transparent 55%,#6e747b 56%,transparent 57%)}
+.app{width:min(900px,100%);margin:auto;position:relative}
+header{text-align:center;padding:8px 0 25px}
+.crown{font-size:42px;line-height:1;color:#e5e7e9;text-shadow:0 0 18px #fff7}
+h1{margin:8px 0 0;font-size:clamp(42px,9vw,76px);font-weight:950;letter-spacing:-.07em;line-height:.88;color:#e7e9eb;text-shadow:0 2px 0 #777,0 8px 25px #fff3}
+h1 span{display:block;font-style:italic;letter-spacing:-.06em}
+.tag{margin-top:20px;font-size:10px;letter-spacing:.42em;color:#b9bec4;font-weight:bold}
+.panel{background:linear-gradient(145deg,#202326eF,#0d0f11f5);border:1px solid #646a70;border-radius:25px;padding:23px;box-shadow:0 20px 60px #000a,inset 0 1px #ffffff12}
+.panel-title{display:flex;align-items:center;gap:13px;margin:0 0 20px;font-size:20px;letter-spacing:.1em;font-weight:900}
+.bolt{font-size:28px;color:#e7e9eb}
+.sub{color:#aeb4bb;font-size:13px;margin:-10px 0 20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{background:#090b0d;border:1px solid #383d42;border-radius:18px;padding:17px}
+label{display:block;font-weight:800;color:#d9dde1;font-size:14px;margin-bottom:11px}
+select,input{width:100%;border:1px solid #737980;border-radius:12px;background:linear-gradient(#202326,#101214);color:#fff;padding:13px 14px;font-size:17px;outline:none}
+select:focus,input:focus{border-color:#e1e4e7;box-shadow:0 0 0 2px #fff2}
+small{display:block;color:#9299a1;font-size:11px;margin:8px 2px 0}
+.mode-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
+.mode{background:linear-gradient(#171a1d,#090b0d);border:1px solid #62686f;color:#cbd0d5;border-radius:16px;padding:16px 10px;font-size:16px;font-weight:850;letter-spacing:.04em}
+.mode.active{background:linear-gradient(145deg,#e7e9eb,#858c93);color:#101214;border-color:#fff;box-shadow:0 0 18px #fff4}
+.mode span{font-size:22px;margin-right:8px;vertical-align:-2px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+button{cursor:pointer}
+.action{border-radius:999px;padding:17px 12px;font-size:20px;font-weight:950;letter-spacing:.12em;border:1px solid #8a9096}
+#start{background:linear-gradient(145deg,#f1f2f3,#9ba1a7);color:#101214;box-shadow:0 5px 22px #fff2}
+#stop{background:linear-gradient(145deg,#24282c,#090a0b);color:#f1f2f3}
+.status{display:flex;align-items:center;gap:12px;margin-top:17px;border:1px solid #555b61;background:#090b0d;border-radius:999px;padding:13px 17px;color:#cbd0d5;font-size:14px}
+.dot{margin-left:auto;width:12px;height:12px;border-radius:50%;background:#aeb4bb;box-shadow:0 0 12px #fff8}
+.status.running .dot{background:#f4f5f6;box-shadow:0 0 15px #fff}
+.demo{margin-top:16px;padding:18px;border:1px solid #383d42;border-radius:18px;background:#090b0d;text-align:center}
+#demoTarget{width:100%;min-height:58px;border:1px solid #71777e;border-radius:14px;background:linear-gradient(145deg,#292d31,#111315);color:#fff;font-weight:850;letter-spacing:.12em}
+#demoTarget.pressed{background:linear-gradient(145deg,#f0f2f4,#9da4aa);color:#090a0b;box-shadow:0 0 25px #fff6}
+.counter{color:#aeb4bb;font-size:12px;margin:13px 0 0}
+.counter strong{color:white;font-size:19px;margin-left:7px}
+.notice{font-size:11px;color:#858c94;line-height:1.55;text-align:center;margin:17px 5px 0}
+.hidden{display:none}
+@media(max-width:620px){body{padding:18px 12px 32px}.panel{padding:16px;border-radius:21px}.grid{grid-template-columns:1fr}.panel-title{font-size:17px}.action{font-size:16px}.tag{letter-spacing:.25em}}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+  <div class="crown">♛</div>
+  <h1>MIDNIGHT<span>MACRO</span></h1>
+  <div class="tag">CLICK &nbsp;•&nbsp; AUTOMATE &nbsp;•&nbsp; DOMINATE</div>
+</header>
+
+<section class="panel">
+  <h2 class="panel-title"><span class="bolt">ϟ</span> AUTO CLICKER</h2>
+  <p class="sub">Choose a mode, set your rate and duty cycle, then start.</p>
+
+  <div class="mode-buttons">
+    <button class="mode active" id="mouseMode" type="button"><span>◉</span> Mouse</button>
+    <button class="mode" id="keyboardMode" type="button"><span>⌨</span> Keyboard</button>
+  </div>
+
+  <div class="grid">
+    <div class="field" id="mouseField">
+      <label for="mouseButton">Mouse Button</label>
+      <select id="mouseButton">
+        <option value="left">Left Click</option>
+        <option value="right">Right Click (page demo)</option>
+        <option value="middle">Middle Click (page demo)</option>
+      </select>
+    </div>
+    <div class="field hidden" id="keyField">
+      <label for="keyChoice">Key to press</label>
+      <select id="keyChoice">
+        <option>F</option><option>R</option><option>E</option><option>Q</option>
+        <option>W</option><option>A</option><option>S</option><option>D</option>
+        <option>Space</option><option>Enter</option><option>Shift</option><option>Ctrl</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="rate">CPS / KPS</label>
+      <input id="rate" type="number" min="0" step="any" value="10" inputmode="decimal">
+      <small>Clicks or key presses per second · 0 = stopped</small>
+    </div>
+    <div class="field">
+      <label for="duty">Duty Cycle (%)</label>
+      <input id="duty" type="number" min="1" max="100" step="1" value="50" inputmode="numeric">
+      <small>Percentage of each cycle the demo press is held</small>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="action" id="start" type="button">▶ &nbsp; START</button>
+    <button class="action" id="stop" type="button">■ &nbsp; STOP</button>
+  </div>
+  <div class="status" id="status"><span>⌁</span> Status: <strong id="statusText">Ready</strong><span class="dot"></span></div>
+  <div class="demo">
+    <button id="demoTarget" type="button">TEST AREA · PAGE DEMO</button>
+    <p class="counter">DEMO ACTIVATIONS <strong id="count">0</strong></p>
+  </div>
+</section>
+<p class="notice">This is a browser-page demo. It can animate and count actions inside this page only; it cannot send real mouse or keyboard input to other apps, games, or the PS5. Browser timing is approximate, especially at very high rates.</p>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let mode = 'mouse', running = false, intervalId = null, holdTimeout = null, total = 0;
+const target = $('demoTarget');
+
+function setMode(next) {
+  stopDemo();
+  mode = next;
+  $('mouseMode').classList.toggle('active', mode === 'mouse');
+  $('keyboardMode').classList.toggle('active', mode === 'keyboard');
+  $('mouseField').classList.toggle('hidden', mode !== 'mouse');
+  $('keyField').classList.toggle('hidden', mode !== 'keyboard');
+}
+$('mouseMode').addEventListener('click', () => setMode('mouse'));
+$('keyboardMode').addEventListener('click', () => setMode('keyboard'));
+
+function releaseDemoPress() {
+  clearTimeout(holdTimeout);
+  target.classList.remove('pressed');
+  target.textContent = mode === 'mouse' ? 'TEST AREA · PAGE DEMO' : `TEST KEY · ${$('keyChoice').value.toUpperCase()}`;
+}
+function pulse() {
+  if (!running) return;
+  total++;
+  $('count').textContent = total.toLocaleString();
+  target.classList.add('pressed');
+  target.textContent = mode === 'mouse' ? `${$('mouseButton').selectedOptions[0].text.toUpperCase()} · DEMO` : `KEY ${$('keyChoice').value.toUpperCase()} · DEMO`;
+  const cps = Number($('rate').value);
+  const duty = Math.min(100, Math.max(1, Number($('duty').value) || 50));
+  const cycleMs = 1000 / cps;
+  holdTimeout = setTimeout(releaseDemoPress, Math.max(1, cycleMs * duty / 100));
+}
+function startDemo() {
+  const cps = Number($('rate').value);
+  const duty = Number($('duty').value);
+  if (!Number.isFinite(cps) || cps <= 0) { $('statusText').textContent = 'Enter a rate above 0'; return; }
+  if (!Number.isFinite(duty) || duty < 1 || duty > 100) { $('statusText').textContent = 'Duty cycle must be 1–100%'; return; }
+  stopDemo(false);
+  running = true;
+  $('statusText').textContent = 'Running · page demo';
+  $('status').classList.add('running');
+  pulse();
+  intervalId = setInterval(pulse, Math.max(1, 1000 / cps));
+}
+function stopDemo(resetStatus = true) {
+  running = false;
+  clearInterval(intervalId);
+  clearTimeout(holdTimeout);
+  intervalId = holdTimeout = null;
+  releaseDemoPress();
+  $('status').classList.remove('running');
+  if (resetStatus) $('statusText').textContent = 'Ready';
+}
+$('start').addEventListener('click', () => startDemo());
+$('stop').addEventListener('click', () => stopDemo());
+window.addEventListener('blur', () => stopDemo());
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopDemo(); });
+</script>
+</body>
+</html>
